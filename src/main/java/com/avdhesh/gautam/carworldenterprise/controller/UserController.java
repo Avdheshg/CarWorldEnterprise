@@ -1,7 +1,8 @@
 package com.avdhesh.gautam.carworldenterprise.controller;
 
 import com.avdhesh.gautam.carworldenterprise.models.Car;
-import com.avdhesh.gautam.carworldenterprise.service.UsedCarServiceImpl;
+import com.avdhesh.gautam.carworldenterprise.models.User;
+import com.avdhesh.gautam.carworldenterprise.service.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,29 +13,29 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1")
-public class UsedCarController
+public class UserController
 {
     @Autowired
-    private UsedCarServiceImpl usedCarService;
+    private UserService userService;
 
-    @PostMapping("/admin/usedCars")
-    public ResponseEntity<String> addCars(@RequestBody List<Car> cars)
+    @PostMapping("/admin/users")
+    public ResponseEntity<String> createAllUsers(@RequestBody List<User> users)
     {
-        return new ResponseEntity<>(usedCarService.addCars(cars), HttpStatus.CREATED);
+        return new ResponseEntity<>(userService.createAllUsers(users), HttpStatus.CREATED);
     }
 
-    @GetMapping("/public/usedCars")
-    public ResponseEntity<List<Car>> getAllCars()
+    @GetMapping("/admin/users")
+    public ResponseEntity<List<User>> getAllUsers()
     {
-        return new ResponseEntity<>(usedCarService.getAllCars(), HttpStatus.OK);
+        return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
     }
 
-    @GetMapping("/public/usedCars/{usedCarId}")
-    public ResponseEntity<String> getCarById(@PathVariable Long usedCarId)
+    @GetMapping("/public/users/{userId}")
+    public ResponseEntity<String> getUserById(@PathVariable Long userId)
     {
         try
         {
-            return new ResponseEntity<>(usedCarService.getCarById(usedCarId).toString(), HttpStatus.OK);
+            return new ResponseEntity<>(userService.getUserById(userId).toString(), HttpStatus.OK);
         }
         catch (ResponseStatusException responseStatusException)
         {
@@ -42,12 +43,12 @@ public class UsedCarController
         }
     }
 
-    @PatchMapping("/admin/usedCars/{usedCarId}")
-    public ResponseEntity<String> updateCar(@RequestBody Car car, @PathVariable Long usedCarId)
+    @PatchMapping("/public/users/{userId}")
+    public ResponseEntity<String> updateCar(@RequestBody User user, @PathVariable Long userId)
     {
         try
         {
-            return new ResponseEntity<>(usedCarService.updateCarById(car, usedCarId), HttpStatus.OK);
+            return new ResponseEntity<>(userService.updateUserById(user, userId), HttpStatus.OK);
         }
         catch (ResponseStatusException responseStatusException)
         {
@@ -55,16 +56,17 @@ public class UsedCarController
         }
     }
 
-    @DeleteMapping("/admin/usedCars/{usedCarId}")
-    public ResponseEntity<String> deleteCar(@PathVariable Long usedCarId)
+    @DeleteMapping("/public/users/{userId}")
+    public ResponseEntity<String> deleteUserById(@PathVariable Long userId)
     {
         try
         {
-            return new ResponseEntity<>(usedCarService.deleteCarById(usedCarId), HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(userService.deleteUserById(userId), HttpStatus.NO_CONTENT);
         }
         catch (ResponseStatusException responseStatusException)
         {
             return new ResponseEntity<>(responseStatusException.getMessage(), responseStatusException.getStatusCode());
         }
     }
+
 }

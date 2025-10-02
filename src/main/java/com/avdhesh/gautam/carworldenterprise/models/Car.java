@@ -1,5 +1,7 @@
 package com.avdhesh.gautam.carworldenterprise.models;
 
+import com.avdhesh.gautam.carworldenterprise.models.types.*;
+
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -13,12 +15,9 @@ public class Car
     private double rating;
     private double mileage;
     private int enginePower;
-    //    private BodyType bodyType;
-    private String bodyType;
-    //    private TransmissionType transmissionType;
-    private String transmissionType;
-    //    private FuelType fuelType;
-    private String fuelType;
+    private BodyType bodyType;
+    private TransmissionType transmissionType;
+    private FuelType fuelType;
     private int seatingCapacity;
     private String summary;
     private String coverImageUrl;
@@ -93,14 +92,6 @@ public class Car
         this.rating = rating;
     }
 
-    public String getBodyType() {
-        return bodyType;
-    }
-
-    public void setBodyType(String bodyType) {
-        this.bodyType = bodyType;
-    }
-
     public double getMileage() {
         return mileage;
     }
@@ -115,22 +106,6 @@ public class Car
 
     public void setEnginePower(int enginePower) {
         this.enginePower = enginePower;
-    }
-
-    public String getTransmissionType() {
-        return transmissionType;
-    }
-
-    public void setTransmissionType(String transmissionType) {
-        this.transmissionType = transmissionType;
-    }
-
-    public String getFuelType() {
-        return fuelType;
-    }
-
-    public void setFuelType(String fuelType) {
-        this.fuelType = fuelType;
     }
 
     public int getSeatingCapacity() {
@@ -179,6 +154,30 @@ public class Car
 
     public void setImagesUrl(List<String> imagesUrl) {
         this.imagesUrl = imagesUrl;
+    }
+
+    public BodyType getBodyType() {
+        return bodyType;
+    }
+
+    public void setBodyType(BodyType bodyType) {
+        this.bodyType = bodyType;
+    }
+
+    public TransmissionType getTransmissionType() {
+        return transmissionType;
+    }
+
+    public void setTransmissionType(TransmissionType transmissionType) {
+        this.transmissionType = transmissionType;
+    }
+
+    public FuelType getFuelType() {
+        return fuelType;
+    }
+
+    public void setFuelType(FuelType fuelType) {
+        this.fuelType = fuelType;
     }
 
     @Override

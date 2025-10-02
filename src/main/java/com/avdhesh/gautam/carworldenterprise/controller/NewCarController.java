@@ -47,7 +47,7 @@ public class NewCarController
     {
         try
         {
-            return new ResponseEntity<>(newCarService.updateCar(car, newCarId), HttpStatus.OK);
+            return new ResponseEntity<>(newCarService.updateCarById(car, newCarId), HttpStatus.OK);
         }
         catch (ResponseStatusException responseStatusException)
         {
@@ -60,7 +60,7 @@ public class NewCarController
     {
         try
         {
-            return new ResponseEntity<>(newCarService.deleteCar(newCarId), HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(newCarService.deleteCarById(newCarId), HttpStatus.NO_CONTENT);
         }
         catch (ResponseStatusException responseStatusException)
         {

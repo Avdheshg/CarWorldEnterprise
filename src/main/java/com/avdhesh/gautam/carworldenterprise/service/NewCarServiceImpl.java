@@ -13,17 +13,17 @@ import com.avdhesh.gautam.carworldenterprise.service.interfaces.CarService;
 public class NewCarServiceImpl implements CarService
 {
     private List<Car> cars = new ArrayList<>();
-    private Long nextId = 1L;
+    private Long carId = 1L;
 
-    private Long getNextId() { return nextId++; }
+    private Long getCarId() { return carId++; }
 
     @Override
-    public String addCars(List<Car> cars)
+    public String addCars(List<Car> allCars)
     {
-        for (Car car : cars)
+        for (Car car : allCars)
         {
-            car.setId(getNextId());
-            this.cars.add(car);
+            car.setId(getCarId());
+            cars.add(car);
         }
 
         return "New Cars added successfully!";
@@ -45,7 +45,7 @@ public class NewCarServiceImpl implements CarService
     }
 
     @Override
-    public String updateCar(Car car, Long newCarId)
+    public String updateCarById(Car car, Long newCarId)
     {
         Car foundCar = getCarById(newCarId);
 
@@ -56,7 +56,7 @@ public class NewCarServiceImpl implements CarService
     }
 
     @Override
-    public String deleteCar(Long newCarId)
+    public String deleteCarById(Long newCarId)
     {
         Car foundCar = getCarById(newCarId);
 

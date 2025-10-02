@@ -13,17 +13,17 @@ import java.util.List;
 public class UsedCarServiceImpl implements CarService
 {
     private List<Car> cars = new ArrayList<>();
-    private Long nextId = 1L;
+    private Long carId = 1L;
 
-    private Long getNextId() { return nextId++; }
+    private Long getCarId() { return carId++; }
 
     @Override
-    public String addCars(List<Car> cars)
+    public String addCars(List<Car> allCars)
     {
-        for (Car car : cars)
+        for (Car car : allCars)
         {
-            car.setId(getNextId());
-            this.cars.add(car);
+            car.setId(getCarId());
+            cars.add(car);
         }
 
         return "Used Cars added successfully!";
@@ -45,7 +45,7 @@ public class UsedCarServiceImpl implements CarService
     }
 
     @Override
-    public String updateCar(Car car, Long usedCarId)
+    public String updateCarById(Car car, Long usedCarId)
     {
         Car foundCar = getCarById(usedCarId);
 
@@ -56,7 +56,7 @@ public class UsedCarServiceImpl implements CarService
     }
 
     @Override
-    public String deleteCar(Long usedCarId)
+    public String deleteCarById(Long usedCarId)
     {
         Car foundCar = getCarById(usedCarId);
 

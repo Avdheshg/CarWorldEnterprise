@@ -1,5 +1,7 @@
 package com.avdhesh.gautam.carworldenterprise.service;
 
+import com.avdhesh.gautam.carworldenterprise.repositories.NewCarRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -12,19 +14,13 @@ import com.avdhesh.gautam.carworldenterprise.service.interfaces.CarService;
 @Service
 public class NewCarServiceImpl implements CarService
 {
-    private List<Car> cars = new ArrayList<>();
-    private Long carId = 1L;
-
-    private Long getCarId() { return carId++; }
+    @Autowired
+    private NewCarRepository newCarRepository;
 
     @Override
     public String addCars(List<Car> allCars)
     {
-        for (Car car : allCars)
-        {
-            car.setId(getCarId());
-            cars.add(car);
-        }
+        newCarRepository.saveAll(allCars);
 
         return "New Cars added successfully!";
     }
@@ -32,16 +28,17 @@ public class NewCarServiceImpl implements CarService
     @Override
     public List<Car> getAllCars()
     {
-        return cars;
+        return newCarRepository.findAll();
     }
 
     @Override
     public Car getCarById(Long newCardId)
     {
-        return cars.stream()
-                .filter(car -> car.getId().equals(newCardId))
-                .findFirst()
+        Optional<Car> foundCar = newCarRepository.findById(newCardId);
+
+        return foundCar
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Car not found with the id " + newCardId));
+
     }
 
     @Override
@@ -49,8 +46,8 @@ public class NewCarServiceImpl implements CarService
     {
         Car foundCar = getCarById(newCarId);
 
-        // validations to check what to update
         foundCar.setName(car.getName());
+        newCarRepository.save(foundCar);
 
         return "Car updated with the Id " + newCarId;
     }
@@ -58,9 +55,7 @@ public class NewCarServiceImpl implements CarService
     @Override
     public String deleteCarById(Long newCarId)
     {
-        Car foundCar = getCarById(newCarId);
-
-        cars.remove(foundCar);
+        newCarRepository.deleteById(newCarId);
 
         return "Car deleted successfully with the Id: " + newCarId;
     }

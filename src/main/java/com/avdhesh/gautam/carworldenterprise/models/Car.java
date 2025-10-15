@@ -1,13 +1,19 @@
 package com.avdhesh.gautam.carworldenterprise.models;
 
 import com.avdhesh.gautam.carworldenterprise.models.types.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-
+@Entity
 public class Car
 {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String brand;
     private String name;

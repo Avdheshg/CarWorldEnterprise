@@ -2,15 +2,22 @@ package com.avdhesh.gautam.carworldenterprise.models;
 
 import com.avdhesh.gautam.carworldenterprise.models.types.BookingStatus;
 import com.avdhesh.gautam.carworldenterprise.models.types.PaymentStatus;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+@Entity
 public class Booking
 {
+    @Id
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
     private Long userId;
-    private Car car;
+    private Long carId;
     private LocalDateTime createdAt;
     private BigDecimal amount;
     private PaymentStatus paymentStatus;
@@ -32,12 +39,12 @@ public class Booking
         this.userId = userId;
     }
 
-    public Car getCar() {
-        return car;
+    public Long getCar() {
+        return carId;
     }
 
     public void setCar(Car car) {
-        this.car = car;
+        this.carId = carId;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -77,7 +84,7 @@ public class Booking
         return "Booking{" +
                 "id=" + id +
                 ", user=" + userId +
-                ", car=" + car +
+                ", carId=" + carId +
                 ", createdAt=" + createdAt +
                 ", amount=" + amount +
                 ", paymentStatus=" + paymentStatus +

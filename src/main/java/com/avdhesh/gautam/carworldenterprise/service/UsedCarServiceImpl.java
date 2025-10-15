@@ -1,30 +1,27 @@
 package com.avdhesh.gautam.carworldenterprise.service;
 
 import com.avdhesh.gautam.carworldenterprise.models.Car;
+import com.avdhesh.gautam.carworldenterprise.repositories.UsedCarRepository;
 import com.avdhesh.gautam.carworldenterprise.service.interfaces.CarService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UsedCarServiceImpl implements CarService
 {
-    private List<Car> cars = new ArrayList<>();
-    private Long carId = 1L;
-
-    private Long getCarId() { return carId++; }
+    @Autowired
+    private UsedCarRepository usedCarRepository;
 
     @Override
     public String addCars(List<Car> allCars)
     {
-        for (Car car : allCars)
-        {
-            car.setId(getCarId());
-            cars.add(car);
-        }
+        usedCarRepository.saveAll(allCars);
 
         return "Used Cars added successfully!";
     }
@@ -32,15 +29,15 @@ public class UsedCarServiceImpl implements CarService
     @Override
     public List<Car> getAllCars()
     {
-        return cars;
+        return usedCarRepository.findAll();
     }
 
     @Override
     public Car getCarById(Long usedCarId)
     {
-        return cars.stream()
-                .filter(car -> car.getId().equals(usedCarId))
-                .findFirst()
+        Optional<Car> foundCar = usedCarRepository.findById(usedCarId);
+
+        return foundCar
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Car not found with the id " + usedCarId));
     }
 
@@ -49,8 +46,8 @@ public class UsedCarServiceImpl implements CarService
     {
         Car foundCar = getCarById(usedCarId);
 
-        // validations to check what to update
         foundCar.setName(car.getName());
+        usedCarRepository.save(foundCar);
 
         return "Car updated with the Id " + usedCarId;
     }
@@ -58,9 +55,7 @@ public class UsedCarServiceImpl implements CarService
     @Override
     public String deleteCarById(Long usedCarId)
     {
-        Car foundCar = getCarById(usedCarId);
-
-        cars.remove(foundCar);
+        usedCarRepository.deleteById(usedCarId);
 
         return "Car deleted successfully with the Id: " + usedCarId;
     }

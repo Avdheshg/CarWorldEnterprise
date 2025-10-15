@@ -148,7 +148,7 @@ CarWorldEnterprise is an advanced Spring Boot application for car dealership man
 
 ## 🛠 Technologies
 
-- **Java 17+**
+- **Java**
 - **Spring Boot**
 - **Spring Data JPA / Hibernate**
 - **H2**
